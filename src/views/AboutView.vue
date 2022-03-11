@@ -1,5 +1,16 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div>
+    <Favorite />
   </div>
 </template>
+<script>
+import Favorite from "../components/Favorite.vue";
+
+export default {
+  name: "Home",
+
+  components: {
+    Favorite,
+  },
+};
+</script>
