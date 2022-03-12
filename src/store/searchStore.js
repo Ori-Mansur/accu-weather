@@ -28,6 +28,9 @@ export default {
             const cities = await searchService.searchByGeoLocation(q);
             context.commit({ type: 'setSelectedCity', cities });
             context.commit({ type: 'setLocationCity', cities });
+        },
+        setSelectedCity(context, { cities }){
+            context.commit({ type: 'setSelectedCity', cities });
         }
 
     },

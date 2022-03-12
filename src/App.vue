@@ -32,8 +32,8 @@
 
         <template v-slot:extension>
           <v-tabs align-with-title>
-            <v-tab to="/">Home</v-tab>
-            <v-tab to="/favorite">Favorite</v-tab>
+            <v-tab  to="/">Home</v-tab>
+            <v-tab  to="/favorite">Favorite</v-tab>
           </v-tabs>
         </template>
       </v-app-bar>
