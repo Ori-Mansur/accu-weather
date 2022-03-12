@@ -6,6 +6,7 @@
       :loading="isLoading"
       :search-input.sync="search"
       hide-no-data
+      :error-messages="error"
       item-text="LocalizedName"
       item-value="Country.LocalizedName"
       label="Search City"
@@ -24,6 +25,9 @@
           ></v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-action>
+          <v-icon v-if="favorites && favorites[item.Key]" color="deep-orange">
+            mdi-heart
+          </v-icon>
           <v-icon>mdi-map-marker</v-icon>
         </v-list-item-action>
       </template>
@@ -112,12 +116,13 @@
 
 <script>
 export default {
-  name: "HelloWorld",
-
+  name: "Search",
   data: () => ({
     isLoading: false,
     model: null,
+    oldSelected: null,
     search: null,
+    error: "",
   }),
   computed: {
     selectedCity() {
@@ -152,8 +157,9 @@ export default {
       immediate: false,
       deep: true,
       async handler() {
-        this.isLoading = true;
         if (this.model?.Key) {
+          this.oldSelected = this.model;
+          this.isLoading = true;
           try {
             await this.$store.dispatch({
               type: "forecastsDays",
@@ -168,7 +174,10 @@ export default {
       },
     },
     async search(val) {
-      if (val?.length < 3 || this.isLoading) return;
+      this.error = /^[a-zA-Z\s]*$/.test(val) ? "" : "English Only";
+      if (!val || val.length < 3 || this.isLoading || this.error) {
+        return;
+      }
 
       this.isLoading = true;
       try {
